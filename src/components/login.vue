@@ -7,6 +7,26 @@
     <button disabled="disabled">Forgot Password</button>
   </div>
 </template>
+<script>
+const axios = require("axios");
+
+export default {
+  name: "Login",
+  components: {},
+  created() {
+    axios
+      .get("http://localhost:3000/api/listAccounts")
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  },
+};
+</script>
+
 
 <style scoped>
 #bank_login {
@@ -45,13 +65,13 @@
 
 #bank_login input:focus {
   outline: none;
-  box-shadow: 0 1rem 2rem rgba(0,0,0, 0.3);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
   border-bottom: 3px solid #99b898;
 }
 
 #bank_login input:focus:invalid {
-      border-bottom: 3px solid #b83b5e;
-    }
+  border-bottom: 3px solid #b83b5e;
+}
 
 #bank_login button {
   font-size: 1.1rem;
