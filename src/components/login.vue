@@ -13,7 +13,7 @@ const axios = require("axios");
 export default {
   name: "Login",
   components: {},
-  created() {
+  mounted() {
     axios
       .get("http://localhost:3000/api/listAccounts")
       .then(function (response) {

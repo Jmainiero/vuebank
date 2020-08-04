@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-src/db
+src/db/db_con.js
 
 # local env files
 .env.local

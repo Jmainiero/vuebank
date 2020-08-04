@@ -1,26 +1,72 @@
 <template>
-  <div id="bank_signup">
-    <h1>Sign Up</h1>
-    <div class="form__group">
-      <input type="text" placeholder="First Name" />
-      <input type="text" placeholder="Last Name" />
-    </div>
-    <input type="text" placeholder="Address" />
-    <input type="text" placeholder="City" />
-    <input type="text" placeholder="State" />
-    <input type="text" placeholder="Zip-Code" />
+  <form action="#" @submit.prevent="signup">
+    <div id="bank_signup">
+      <h1>Sign Up</h1>
+      <div class="form__group">
+        <input type="text" placeholder="First Name" v-model="formdata.first" />
+        <input type="text" placeholder="Last Name" v-model="formdata.last" />
+      </div>
+      <input type="text" placeholder="Address" v-model="formdata.address" />
+      <input type="text" placeholder="City" v-model="formdata.city" />
+      <input type="text" placeholder="State" v-model="formdata.state" />
+      <input type="text" placeholder="Zip-Code" v-model="formdata.zip" />
 
-    <div class="form__group">
-      <input type="email" placeholder="Email" />
-      <input type="tel" placeholder="Phone Number" />
+      <div class="form__group">
+        <input type="email" placeholder="Email" v-model="formdata.email" />
+        <input type="tel" placeholder="Phone Number" v-model="formdata.phone" />
+      </div>
+      <div class="form__group">
+        <input type="password" placeholder="Password" v-model="formdata.password" />
+        <input type="password" placeholder="Confirm Password" />
+      </div>
+      <button>Create Account</button>
     </div>
-    <div class="form__group">
-      <input type="password" placeholder="Password" />
-      <input type="password" placeholder="Confirm Password" />
-    </div>
-    <button disabled="disabled">Create Account</button>
-  </div>
+  </form>
 </template>
+
+<script>
+const axios = require("axios");
+
+export default {
+  name: "Signup",
+  components: {},
+  data() {
+    return {
+      formdata: {
+        first: "",
+        last: "",
+        address: "",
+        city: "",
+        state: "",
+        zip: "",
+        email: "",
+        phone: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    signup() {
+      let self = this;
+      axios
+        .post("http://localhost:3000/api/postSignup", {
+          params: self.formdata
+        })
+        .then(function (response) {
+          if(response.status == 200){
+            window.location = '/';
+          }
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    },
+  },
+};
+</script>
+
+
 
 <style scoped>
 #bank_signup {
