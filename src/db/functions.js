@@ -49,8 +49,9 @@ app.post('/api/postSignup', jsonParser, async (req, res) => {
         const hashedPassword = await bcrypt.hash(req.body.formdata.password, 10);
 
         db.query(`INSERT INTO accounts(firstName, lastName,email,password,phoneNumber,address,city,state,zip) VALUES('${req.body.formdata.first}','${req.body.formdata.last}','${req.body.formdata.email}','${hashedPassword}',${req.body.formdata.phone},'${req.body.formdata.address}','${req.body.formdata.city}','${req.body.formdata.state}',${req.body.formdata.zip})`, function (err, result) {
-            if (err) throw err;
-            res.end(JSON.stringify(result));
+            if (err.code == 'ER_DUP_ENTRY') res.status(409).send('ERROR. Account Already Exits.');
+            if(err && err.code != 'ER_DUP_ENTRY') throw err;
+            res.end();
         });
 
     } catch {

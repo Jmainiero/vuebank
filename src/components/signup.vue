@@ -50,16 +50,21 @@ export default {
       let self = this;
       axios
         .post("http://localhost:3000/api/postSignup", {
-          formdata: self.formdata
+          formdata: self.formdata,
         })
         .then(function (response) {
-          if(response.status == 200){
-            window.location = '/';
-          }
+          console.log(response);
+          // if(response.status == 200){
+          // window.location = '/';
+          // }
         })
         .catch(function (error) {
           // handle error
-          console.log(error);
+          console.log(error.response);
+
+          if (error.response.status === 409) {
+            alert(error.response.data);
+          }
         });
     },
   },
