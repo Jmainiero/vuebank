@@ -1,11 +1,13 @@
 <template>
-  <div id="bank_login">
-    <h1>Bank of VueJS</h1>
-    <input type="email" placeholder="Email" />
-    <input type="password" placeholder="Password" />
-    <button disabled="disabled">Login</button>
-    <button disabled="disabled">Forgot Password</button>
-  </div>
+  <form action="#" @submit.prevent="login">
+    <div id="bank_login">
+      <h1>Bank of VueJS</h1>
+      <input type="email" placeholder="Email" v-model="user.email" />
+      <input type="password" placeholder="Password" v-model="user.password" />
+      <button>Login</button>
+      <button disabled="disabled">Forgot Password</button>
+    </div>
+  </form>
 </template>
 <script>
 const axios = require("axios");
@@ -13,16 +15,32 @@ const axios = require("axios");
 export default {
   name: "Login",
   components: {},
-  mounted() {
-    axios
-      .get("http://localhost:3000/api/listAccounts")
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
+  data() {
+    return {
+      user: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    login() {
+      let self = this;
+      axios
+        .post("http://localhost:3000/api/login", {
+          user: self.user,
+        })
+        .then(function (response) {
+          console.log(response);
+          if (response.status == 200) {
+            // window.location = "/signup";
+          }
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    },
   },
 };
 </script>

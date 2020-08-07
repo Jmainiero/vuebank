@@ -2,7 +2,7 @@
 node_modules
 /dist
 src/db/db_con.js
-
+src/db/request.*
 # local env files
 .env.local
 .env.*.local

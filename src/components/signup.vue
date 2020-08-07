@@ -50,7 +50,7 @@ export default {
       let self = this;
       axios
         .post("http://localhost:3000/api/postSignup", {
-          params: self.formdata
+          formdata: self.formdata
         })
         .then(function (response) {
           if(response.status == 200){
