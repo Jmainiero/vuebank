@@ -5,7 +5,7 @@
       <input type="email" placeholder="Email" v-model="user.email" />
       <input type="password" placeholder="Password" v-model="user.password" />
       <button>Login</button>
-      <button disabled="disabled">Forgot Password</button>
+      <!-- <button disabled="disabled">Sign</button> -->
     </div>
   </form>
 </template>

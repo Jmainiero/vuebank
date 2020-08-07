@@ -54,9 +54,9 @@ export default {
         })
         .then(function (response) {
           console.log(response);
-          // if(response.status == 200){
-          // window.location = '/';
-          // }
+          if(response.status == 200){
+          window.location = '/';
+          }
         })
         .catch(function (error) {
           // handle error
