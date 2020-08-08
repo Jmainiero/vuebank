@@ -31,17 +31,16 @@ export default {
           user: self.user,
         })
         .then(function (response) {
-          console.log(response);
-
-          
-
           if (response.status == 200) {
-            // window.location = "/signup";
+            window.location = "/dashboard";
+            sessionStorage.setItem('session', 'true');
           }
         })
         .catch(function (error) {
           // handle error
-          console.log(error);
+          if(error.response.status === 401){
+            alert(error.response.data);
+          }
         });
     },
   },

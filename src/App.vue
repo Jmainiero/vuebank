@@ -11,7 +11,13 @@ export default {
   components: {
     headerNav
   },
+  methods: {
+    checkSession() {
+     (sessionStorage.getItem('session') == null) ? console.log(false) : console.log(true);
+    }
+  },
   mounted: function(){
+    this.checkSession();
       return document.title = "Bank of VueJS";
     
   }
@@ -19,10 +25,14 @@ export default {
 </script>
 
 
-<style>
+<style lang='scss'>
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
 * {
   font-size: 62.5%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 body {
   font-family: 'Lato', sans-serif !important;

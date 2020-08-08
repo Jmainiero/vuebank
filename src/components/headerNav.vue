@@ -10,17 +10,17 @@
 #primary-nav {
   text-align: right;
   padding: 1rem !important;
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   font-size: 2.5rem;
   left: 0;
-  background-image: linear-gradient(to bottom, #222831, #393e46);
+  background-image: linear-gradient(to bottom, #1F2933, #1F2833);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
   opacity: 0.8;
 }
 
 #primary-nav a {
   text-transform: uppercase;
-  color: #ffffff;
+  color: #C5C6C7;
   font-weight: 700;
   padding: 1rem;
   display: inline-block;
