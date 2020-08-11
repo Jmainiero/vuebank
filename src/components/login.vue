@@ -14,14 +14,17 @@ const axios = require("axios");
 
 export default {
   name: "Login",
-  components: {},
-  data() {
-    return {
-      user: {
-        email: "",
-        password: "",
-      },
-    };
+  data: () => ({
+    user: {
+      email: "",
+      password: "",
+    },
+    loggedStatus: false,
+  }),
+  computed: {
+    status() {
+      return this.$store.getters.statusOk;
+    },
   },
   methods: {
     login() {
@@ -33,12 +36,12 @@ export default {
         .then(function (response) {
           if (response.status == 200) {
             window.location = "/dashboard";
-            sessionStorage.setItem('session', 'true');
+            sessionStorage.setItem("session", "true");
           }
         })
         .catch(function (error) {
           // handle error
-          if(error.response.status === 401){
+          if (error.response.status === 401) {
             alert(error.response.data);
           }
         });
