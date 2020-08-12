@@ -13,11 +13,12 @@ export default {
   },
   methods: {
     checkSession() {
-     (sessionStorage.getItem('session') == null) ? console.log(false) : console.log(true);
+     if (sessionStorage.getItem('session') == 'false' && this.$router.currentRoute.path != ('/') && this.$router.currentRoute.path != '/signup') this.$router.push('/');
     }
   },
   mounted: function(){
     this.checkSession();
+      console.log(this.$router.currentRoute);
       return document.title = "Bank of VueJS";
     
   }

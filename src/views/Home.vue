@@ -12,6 +12,11 @@ export default {
   name: 'Home',
   components: {
     login
-  }
+  }, 
+  computed: {
+    // localStatus() {
+    //   return sessionStorage.getItem('session');
+    // },
+  },
 }
 </script>

@@ -52,6 +52,11 @@ export default {
   components: {
     appNav,
   },
+  computed: {
+    loggedIn() {
+      return this.$store.getters.grabStatus;
+    },
+  },
 };
 </script>
 
@@ -61,7 +66,11 @@ export default {
 @import "src/scss/layout/_grid.scss";
 
 .accountOverview {
-  background: linear-gradient(to bottom right, rgba(#ffcb9a, 0.6), rgba(#d9b08c, 1));
+  background: linear-gradient(
+    to bottom right,
+    rgba(#ffcb9a, 0.6),
+    rgba(#d9b08c, 1)
+  );
   padding: 2rem;
   margin: 0rem 10rem;
 
@@ -69,7 +78,7 @@ export default {
     display: inline-block;
     width: 60%;
     & h1 {
-      color: #2C3531;
+      color: #2c3531;
       font-size: 3rem;
       text-align: left;
       margin-bottom: 1rem;
@@ -86,7 +95,7 @@ export default {
   box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
 
   & p {
-      font-size: inherit;
+    font-size: inherit;
   }
 }
 </style>

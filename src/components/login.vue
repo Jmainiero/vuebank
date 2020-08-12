@@ -22,11 +22,14 @@ export default {
     loggedStatus: false,
   }),
   computed: {
-    status() {
-      return this.$store.getters.statusOk;
+    loggedIn() {
+      return this.$store.getters.grabStatus;
     },
   },
   methods: {
+    userStatus() {
+      this.$store.dispatch("setStatus");
+    },
     login() {
       let self = this;
       axios
@@ -34,13 +37,17 @@ export default {
           user: self.user,
         })
         .then(function (response) {
+          console.log(response);
           if (response.status == 200) {
+            console.log("hello");
+            self.userStatus();
             window.location = "/dashboard";
             sessionStorage.setItem("session", "true");
           }
         })
         .catch(function (error) {
           // handle error
+          console.log(error);
           if (error.response.status === 401) {
             alert(error.response.data);
           }
