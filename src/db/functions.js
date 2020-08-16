@@ -20,38 +20,8 @@ app.use(function (req, res, next) {
 
 var db = require('./db_con');
 
-app.post('/api/login', jsonParser, async (req, res) => {
-    let user = null;
-    db.query('SELECT password FROM accounts Where email = ?', req.body.user.email, async function (err, result) {
-        if (err) throw err;
-        user = (JSON.stringify(result[0]) == undefined) ? res.status(401).end('Account does not exist') : JSON.stringify(result[0].password);
-        
-        if (user == null) {
-            return res.status(401).send('Invalid Username or Password');
-        }
-
-        try {
-            user = user.substr(1);
-            user = user.slice(0, -1);
-            console.log(result);
-            console.log(user);
-            if (await bcrypt.compare(req.body.user.password, user)) {
-                res.end('Success');
-            } else {
-                console.log(`${req.body.user.password} does not equal ${user}`);
-                res.status('401').end('Invalid Username or Password');
-            }
-
-        } catch {
-            res.status(500).send();
-        }
-    });
-
-});
-
 app.post('/api/postSignup', jsonParser, async (req, res) => {
     try {
-
         // console.log(req.body.formdata);
         const hashedPassword = await bcrypt.hash(req.body.formdata.password, 10);
 

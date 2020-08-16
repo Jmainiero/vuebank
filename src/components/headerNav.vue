@@ -1,9 +1,9 @@
 <template>
   <nav id="primary-nav">
-    <router-link to="/">Home</router-link>
-    <router-link v-show="username == ''" to="/">Login</router-link>
-    <router-link v-show="username == ''" to="/signup">Sign Up</router-link>
-    <router-link v-show="username != ''" @click.native="logout" to="/">Log Out</router-link>
+    <router-link v-if="username == ''"  to="/">Home</router-link>
+    <router-link v-else to="/dashboard">Home</router-link>
+    <router-link v-if="username == ''" to="/signup">Sign Up</router-link>
+    <router-link v-if="username != ''" @click.native="logout" to="/">Log Out</router-link>
   </nav>
 </template>
 
@@ -37,18 +37,18 @@ export default {
   },
 };
 </script>
-
+// 
 
 <style scoped>
 #primary-nav {
   text-align: right;
   padding: 1rem !important;
-  /* margin-bottom: 3rem; */
+  margin-bottom: 5rem;
   font-size: 2.5rem;
   left: 0;
-  background-image: linear-gradient(to bottom, #1f2933, #1f2833);
+  background-image: linear-gradient(to bottom, #112d32, #254e58);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
-  opacity: 0.8;
+  /* opacity: 0.8; */
 }
 
 #primary-nav a {

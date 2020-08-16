@@ -67,12 +67,12 @@ export default {
   top: 0;
   max-width: 60%;
   padding: 6rem 0rem;
-  background-image: linear-gradient(to right bottom, #f0ece3, #dfd3c3);
+  background-image: linear-gradient(to right bottom, #254e58, #112D32);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
 }
 
 #bank_login h1 {
-  color: #596e79;
+  color: #ffffff;
   font-weight: 700;
   font-size: 3rem;
   text-transform: uppercase;
