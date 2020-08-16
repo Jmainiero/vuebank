@@ -30,24 +30,26 @@ export default {
     userStatus() {
       this.$store.dispatch("setStatus");
     },
+    setUser(username) {
+      this.$store.dispatch('setUser', username);
+    },
     login() {
       let self = this;
       axios
-        .post("http://localhost:3000/api/login", {
+        .post("http://localhost:4000/api/login", {
           user: self.user,
         })
         .then(function (response) {
           console.log(response);
           if (response.status == 200) {
-            console.log("hello");
             self.userStatus();
-            window.location = "/dashboard";
+            self.setUser(self.user.email);
+            self.$router.push('/dashboard');
             sessionStorage.setItem("session", "true");
           }
         })
         .catch(function (error) {
           // handle error
-          console.log(error);
           if (error.response.status === 401) {
             alert(error.response.data);
           }

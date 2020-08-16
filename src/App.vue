@@ -14,7 +14,7 @@ export default {
   methods: {
     checkSession() {
      if (sessionStorage.getItem('session') == 'false' && this.$router.currentRoute.path != ('/') && this.$router.currentRoute.path != '/signup') this.$router.push('/');
-    }
+    },
   },
   mounted: function(){
     this.checkSession();

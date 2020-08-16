@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "devStart": "nodemon src/db/functions.js"
+    "devStart": "nodemon src/db/functions.js",
+    "startAuth": "nodemon src/server/auth.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -15,7 +16,9 @@
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "vue": "^2.6.11",
     "vue-router": "^3.3.4",

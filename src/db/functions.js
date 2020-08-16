@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 var bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-
+const jwt = require('jsonwebtoken');
 // create application/json parser
 var jsonParser = bodyParser.json();
 
@@ -16,7 +16,6 @@ app.use(function (req, res, next) {
 
     next();
 });
-
 
 
 var db = require('./db_con');
@@ -34,6 +33,7 @@ app.post('/api/login', jsonParser, async (req, res) => {
         try {
             user = user.substr(1);
             user = user.slice(0, -1);
+            console.log(result);
             console.log(user);
             if (await bcrypt.compare(req.body.user.password, user)) {
                 res.end('Success');
@@ -61,6 +61,7 @@ app.post('/api/postSignup', jsonParser, async (req, res) => {
                 if (err && err.code != 'ER_DUP_ENTRY') throw err;
 
             }
+            console.log(result);
             res.end();
         });
 
