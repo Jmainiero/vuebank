@@ -94,30 +94,38 @@
     <table>
       <thead>
         <tr class="accOverview-head">
-          <th class="column1">Account</th>
-          <th class="column2">Available Balance</th>
-          <th class="column3">Starting Balance</th>
-          <th class="column4">Pending Transacitons</th>
+          <th class="column1">Date</th>
+          <th class="column2">Order ID</th>
+          <th class="column3">Name</th>
+          <th class="column4">Price</th>
+          <th class="column5">Quantity</th>
+          <th class="column6">Total</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="column1">Checking</td>
-          <td class="column2">$10,789.81</td>
-          <td class="column3">$10,789.81</td>
-          <td class="column4">$10,789.81</td>
+          <td class="column1">2017-09-29 01:22</td>
+          <td class="column2">200398</td>
+          <td class="column3">iPhone X 64Gb Grey</td>
+          <td class="column4">$999.00</td>
+          <td class="column5">1</td>
+          <td class="column6">$999.00</td>
         </tr>
         <tr>
-          <td class="column1">Savings</td>
-          <td class="column2">$10,789.81</td>
-          <td class="column3">$10,789.81</td>
-          <td class="column4">$10,789.81</td>
+          <td class="column1">2017-09-28 05:57</td>
+          <td class="column2">200397</td>
+          <td class="column3">Samsung S8 Black</td>
+          <td class="column4">$756.00</td>
+          <td class="column5">1</td>
+          <td class="column6">$756.00</td>
         </tr>
-        <tr class="accOverview-total">
-          <td class="column1">Total</td>
-          <td class="column2">$21,579.62</td>
-          <td class="column3">$21,579.62</td>
-          <td class="column4">$21,579.62</td>
+        <tr>
+          <td class="column1">2017-09-26 05:57</td>
+          <td class="column2">200396</td>
+          <td class="column3">Game Console Controller</td>
+          <td class="column4">$22.00</td>
+          <td class="column5">2</td>
+          <td class="column6">$44.00</td>
         </tr>
       </tbody>
     </table>
@@ -125,7 +133,6 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   components: {},
   computed: {
@@ -133,22 +140,7 @@ export default {
       return this.$store.getters.grabStatus;
     },
   },
-  methods: {
-    getChecking() {
-      axios
-        .get("http://localhost:3000/accountInfo")
-        .then(function (response) {
-          console.log(response.data);
-          return this.response.data;
-        })
-        .catch(function (error) {
-          // handle error
-          if (error.response.status === 401) {
-            alert(error.response.data);
-          }
-        });
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -163,7 +155,14 @@ export default {
   margin: 0rem 10rem;
   color: $color-white;
   padding: 1rem;
-
+  &--acctype {
+    & h1 {
+      font-size: 3rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+  }
   a,
   a:visited {
     color: inherit;
@@ -179,13 +178,13 @@ table {
   background: white;
   border-radius: 10px;
   overflow: hidden;
-  width: 100%;
+	width: 100%;
 }
 
 table thead tr {
   height: 60px;
   // background: #ac3b61;
-  background: #123c69;
+  background: #123C69;
 }
 table tbody tr {
   height: 75px;
@@ -194,36 +193,30 @@ table tbody tr:last-child {
   border: 0;
 }
 
+
 .accOverview-head th {
   font-size: 2rem !important;
   color: $color-white;
-  text-transform: uppercase;
-  font-weight: 500;
 }
 
 tbody tr:nth-child(even) {
   background-color: #f5f5f5;
 }
 
-tbody tr:last-child {
-  font-weight: 700;
-  font-size: 2.25rem !important;
-}
-
 tbody tr {
   font-size: 2rem !important;
   color: $color-black;
   line-height: 1.2;
-  font-weight: unset;
-  transition: 0.3s all;
+	font-weight: unset;
+	transition: 0.3s all;
 }
 
 tbody tr:hover {
-  color: #ac3b51;
-  background-color: #f5f5f5;
-  transform: scale(1.05);
-  font-weight: 700;
-  overflow: none;
+  color: #AC3B51;
+	background-color: #f5f5f5;
+	transform: scale(1.05);
+	font-weight: 700;
+	overflow: none;
   cursor: pointer;
 }
 </style>

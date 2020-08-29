@@ -60,7 +60,10 @@ export default {
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
+@import "src/scss/base/_mixins.scss";
+@import "src/scss/base/_variables.scss";
+@import "src/scss/layout/_grid.scss";
 #bank_login {
   margin: 0 auto;
   left: 0;
@@ -69,6 +72,7 @@ export default {
   padding: 6rem 0rem;
   background-image: linear-gradient(to right bottom, #254e58, #112D32);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+  border-radius: $default-border-radius;
 }
 
 #bank_login h1 {
@@ -89,7 +93,7 @@ export default {
   padding: 2rem;
   width: 50%;
   border: none;
-  border-radius: 3px;
+  border-radius: $default-border-radius;
 }
 #bank_login input:not(:last-child) {
   margin-bottom: 3rem;
@@ -112,7 +116,7 @@ export default {
   text-decoration: none;
   padding: 15px 40px;
   display: inline-block;
-  border-radius: 100px;
+  border-radius: $default-border-radius;
   transition: all 0.2s;
   position: relative;
   border: none;

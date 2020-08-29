@@ -1,33 +1,40 @@
 <template>
   <div id="app">
-     <headerNav/>
-      <router-view/>
+    <headerNav />
+    <router-view />
   </div>
 </template>
 
 <script>
-import headerNav from '@/components/headerNav.vue'
+import headerNav from "@/components/headerNav.vue";
 export default {
   components: {
-    headerNav
+    headerNav,
   },
   methods: {
     checkSession() {
-     if (sessionStorage.getItem('session') == 'false' && this.$router.currentRoute.path != ('/') && this.$router.currentRoute.path != '/signup') this.$router.push('/');
+      if (
+        sessionStorage.getItem("session") == "false" &&
+        this.$router.currentRoute.path != "/" &&
+        this.$router.currentRoute.path != "/signup"
+      )
+        this.$router.push("/");
     },
   },
-  mounted: function(){
+  mounted: function () {
     this.checkSession();
-      console.log(this.$router.currentRoute);
-      return document.title = "Bank of VueJS";
-    
-  }
-}
+    console.log(this.$router.currentRoute);
+    return (document.title = "Bank of VueJS");
+  },
+};
 </script>
 
 
-<style lang='scss'>
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+<style lang="scss">
+@import "src/scss/base/_mixins.scss";
+@import "src/scss/base/_variables.scss";
+@import "src/scss/layout/_grid.scss";
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
 
 * {
   font-size: 62.5%;
@@ -36,7 +43,10 @@ export default {
   box-sizing: border-box;
 }
 body {
-  font-family: 'Lato', sans-serif !important;
+  font-family: "Lato", sans-serif !important;
+  // background: rgba(#bab2b5, 0.5);
+  max-width: 1920px;
+  margin: auto;
 }
 
 #app {
@@ -44,6 +54,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin: 3rem;
+  background: rgba(#bab2b5, 0.5);
+  padding: 0rem 3rem 3rem 3rem;
+  border-radius: $default-border-radius;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
 }
 
 #nav {
