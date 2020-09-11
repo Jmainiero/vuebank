@@ -1,1 +1,1 @@
-web: node src/db/functions.js
+web: node src/db/functions.js src/server/auth.js 
