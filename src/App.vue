@@ -23,7 +23,6 @@ export default {
   },
   mounted: function () {
     this.checkSession();
-    console.log(this.$router.currentRoute);
     return (document.title = "Bank of VueJS");
   },
 };

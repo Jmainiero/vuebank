@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import SignUp from '../views/SignUp.vue';
+import SignUp from '@/components/signup';
 import Dashboard from '@/components/dashboard';
+import Transfer from '@/components/transfer';
 
 Vue.use(VueRouter);
 
@@ -23,9 +24,9 @@ const routes = [
     component: SignUp
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/transfer',
+    name: 'Transfer',
+    component: Transfer
   }
 ]
 

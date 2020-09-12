@@ -31,7 +31,7 @@ export default {
       this.$store.dispatch("setStatus");
     },
     setUser(username) {
-      this.$store.dispatch('setUser', username);
+      this.$store.dispatch("setUser", username);
     },
     login() {
       let self = this;
@@ -40,11 +40,10 @@ export default {
           user: self.user,
         })
         .then(function (response) {
-          console.log(response);
           if (response.status == 200) {
             self.userStatus();
             self.setUser(self.user.email);
-            self.$router.push('/dashboard');
+            self.$router.push("/dashboard");
             sessionStorage.setItem("session", "true");
           }
         })
@@ -70,7 +69,7 @@ export default {
   top: 0;
   max-width: 60%;
   padding: 6rem 0rem;
-  background-image: linear-gradient(to right bottom, #254e58, #112D32);
+  background-image: linear-gradient(to right bottom, #254e58, #112d32);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
   border-radius: $default-border-radius;
 }

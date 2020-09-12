@@ -3,6 +3,7 @@
     <router-link v-if="username == ''" to="/">Home</router-link>
     <router-link v-else to="/dashboard">Home</router-link>
     <router-link v-if="username == ''" to="/signup">Sign Up</router-link>
+    <router-link v-if="username != ''" to="/transfer">Transfer</router-link>
     <router-link v-if="username != ''" @click.native="logout" to="/">Log Out</router-link>
   </nav>
 </template>
@@ -64,13 +65,13 @@ export default {
   display: inline-block;
   transition: ease-in-out 0.2s all;
 
-  &:not(:first-child) {
+  &:last-child {
     background: rgba(#123c69, 0.9);
     color: #c5c6c7;
   }
 
   &:not(:last-child) {
-    color: #123C69;
+    color: #123c69;
   }
 
   border-radius: $default-border-radius;
@@ -79,11 +80,10 @@ export default {
 
 #primary-nav a:hover {
   text-decoration: none;
-  color: #AC3B61;
+  color: #ac3b61;
   transform: scale(1.2);
   margin: 0 1rem 0 2rem;
   background: transparent;
-
 }
 #primary-nav a:not(:last-child) {
   margin-right: 1rem;

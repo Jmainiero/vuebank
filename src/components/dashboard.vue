@@ -1,96 +1,5 @@
 <template>
   <div>
-    <!-- <appNav /> -->
-    <!-- <div class="accountOverview">
-			<div class="row">
-				<div class="col-1-of-4 titlebar">
-					<div class="title-box">
-						<h2 class="titlebar_title">Account Type</h2>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="title-box">
-						<h2 class="titlebar_title">Available Balance</h2>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="title-box">
-						<h2 class="titlebar_title">Today's Starting Balance</h2>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="title-box">
-						<h2 class="titlebar_title">Pending Transactions</h2>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-acc">Checking</p>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-avail">$7,081.79</p>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-today">$7,081.79</p>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-pending">$7,081.79</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-acc">Savings</p>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-avail">$7,081.79</p>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-today">$7,081.79</p>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-pending">$7,081.79</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-acc">TOTAL</p>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-avail-total">$14,081.79</p>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-today-total">14,081.79</p>
-					</div>
-				</div>
-				<div class="col-1-of-4">
-					<div class="detail-box">
-						<p class="detail_title detail_title-pending-total">$14,081.79</p>
-					</div>
-				</div>
-			</div>
-    </div>-->
     <table>
       <thead>
         <tr class="accOverview-head">
@@ -103,21 +12,21 @@
       <tbody>
         <tr>
           <td class="column1">Checking</td>
-          <td class="column2">$10,789.81</td>
-          <td class="column3">$10,789.81</td>
-          <td class="column4">$10,789.81</td>
+          <td class="column2">{{ck_bal}}</td>
+          <td class="column3">{{ck_starting}}</td>
+          <td class="column4">{{ck_pending}}</td>
         </tr>
         <tr>
           <td class="column1">Savings</td>
-          <td class="column2">$10,789.81</td>
-          <td class="column3">$10,789.81</td>
-          <td class="column4">$10,789.81</td>
+          <td class="column2">{{sv_bal}}</td>
+          <td class="column3">{{sv_starting}}</td>
+          <td class="column4">{{sv_pending}}</td>
         </tr>
         <tr class="accOverview-total">
           <td class="column1">Total</td>
-          <td class="column2">$21,579.62</td>
-          <td class="column3">$21,579.62</td>
-          <td class="column4">$21,579.62</td>
+          <td class="column2">{{tot_bal}}</td>
+          <td class="column3">{{tot_start}}</td>
+          <td class="column4">{{tot_pending}}</td>
         </tr>
       </tbody>
     </table>
@@ -127,27 +36,94 @@
 <script>
 const axios = require("axios");
 export default {
+  data: function () {
+    return {
+      ck_bal: 0,
+      ck_starting: 0,
+      ck_pending: 0,
+      sv_bal: 0,
+      sv_starting: 0,
+      sv_pending: 0,
+      tot_bal: 0,
+      tot_start: 0,
+      tot_pending: 0,
+    };
+  },
   components: {},
   computed: {
     loggedIn() {
       return this.$store.getters.grabStatus;
     },
+    username() {
+      return this.$store.getters.grabUsername;
+    },
   },
   methods: {
-    getChecking() {
-      axios
-        .get("http://localhost:3000/accountInfo")
+    async getChecking() {
+      let self = this;
+      const results = await axios
+        .post("http://localhost:3000/ck_accountInfo", {
+          user: self.username,
+        })
         .then(function (response) {
-          console.log(response.data);
-          return this.response.data;
+          if (response.status == 204) {
+            console.log("No data found");
+            alert("No data found. Have you setup your account properly?");
+          } else {
+            self.ck_bal = self.formatMoney(response.data[0].availBal);
+            self.ck_pending = self.formatMoney(response.data[0].pendingBal);
+            self.ck_starting = self.formatMoney(response.data[0].todaysBal);
+            return response.data[0];
+          }
         })
         .catch(function (error) {
-          // handle error
-          if (error.response.status === 401) {
-            alert(error.response.data);
-          }
+          throw error;
         });
+      return results;
     },
+    async getSavings() {
+      let self = this;
+      const results = await axios
+        .post("http://localhost:3000/sv_accountInfo", {
+          user: self.username,
+        })
+        .then(function (response) {
+          if (response.status == 204) {
+            console.log("No data found");
+          } else {
+            self.sv_bal = self.formatMoney(response.data[0].availBal);
+            self.sv_pending = self.formatMoney(response.data[0].pendingBal);
+            self.sv_starting = self.formatMoney(response.data[0].todaysBal);
+            return response.data[0];
+          }
+        })
+        .catch(function (error) {
+          throw error;
+        });
+      return results;
+    },
+    totalBal(checking, savings) {
+      this.tot_bal = this.formatMoney(checking.availBal + savings.availBal);
+      this.tot_start = this.formatMoney(checking.todaysBal + savings.todaysBal);
+      this.tot_pending = this.formatMoney(
+        checking.pendingBal + savings.pendingBal
+      );
+    },
+    formatMoney(money) {
+      money = money.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
+
+      return money;
+    },
+  },
+  async mounted() {
+    const checking = await this.getChecking();
+    const savings = await this.getSavings();
+    if (checking != undefined && savings != undefined) {
+      await this.totalBal(checking, savings);
+    }
   },
 };
 </script>
