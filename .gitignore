@@ -1,17 +1,17 @@
 .DS_Store
-.env
+# .env
 node_modules
 /dist
 # src/db/db_con.js
-src/db/
-src/server/.env.*
-src/server/requests.*
+# src/db/
+# src/server/.env.*
+# src/server/requests.*
 # src/server/db_con.js
 src/server/auth-copy-original.*
 
 # local env files
-.env.local
-.env.*.local
+# .env.local
+# .env.*.local
 
 # Log files
 npm-debug.log*
