@@ -86,7 +86,7 @@ const ckGenerateTrans = async () => {
   let username = 'jcmainiero@gmail.com';
 
   let i = 0;
-  for (let x in y) {
+  for (let nr in y) {
     if (i != y.length - 1) {
       let transId = Math.ceil(10000 + Math.random() * 9000000000000000);
       let transAmnt = y[Math.ceil(Math.random() * y.length - 1)];
@@ -217,7 +217,27 @@ const transfer = async (toAcc, toAmnt, username, req) => {
   }
   const q = await db.query(`INSERT INTO ${toTable}(accountId, ${todbId}, trans_id, vendor, transAmnt, posted, credit) VALUES((SELECT accountId from accounts WHERE email = '${username}'), (SELECT ck_id from accounts WHERE email = '${username}'), ${transId}, ?, ?, ?, 'y')`, [`Transfer from ${req.transferdata.fromAcc}`, toAmnt, posted]);
 
+  await updateBalance();
   return { 'code': 200, "msg": 'COMPLETED BALANCE TRASNFER....', 'query': q };
 };
 
-module.exports = { postSignup, checking, ckAccountInfo, svAccountInfo, ckGenerateTrans, updateBalance, svGenerateTrans, transfer };
+const getTransactions = async (username) => {
+  try {
+    const query = new Promise((resolve, reject) => {
+      db.query(`SELECT * FROM ck_trans WHERE accountId = (SELECT accountId from accounts WHERE email = ?) LIMIT 10`, username, function async(err, result) {
+        if (err) throw err;
+
+        if (result == '') {
+          console.log('Empty Data');
+          return { 'status': 204, 'msg': 'No Data found' };
+        }
+        resolve(JSON.stringify(result));
+      });
+    });
+    return await query;
+  } catch {
+    return { 'code': 500 };
+  }
+};
+
+module.exports = { postSignup, checking, ckAccountInfo, svAccountInfo, ckGenerateTrans, updateBalance, svGenerateTrans, transfer, getTransactions };

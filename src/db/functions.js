@@ -81,6 +81,14 @@ app.post(('/api/transfer'), jsonParser, async (req, res) => {
     console.log(results.msg);
     res.status(results.code).end(results.msg);
 });
+app.post(('/ckTrans'), jsonParser, async (req, res) => {
+    try {
+        const results = await db_functions.getTransactions(req.body.user);
+        res.end(results);
+    } catch {
+        res.status(500).send();
+    }
+});
 
 app.listen('3000', () => {
     console.log('Listening on 3000');
