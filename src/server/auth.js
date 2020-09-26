@@ -43,6 +43,7 @@ app.delete('/api/logout/', (req, res) => {
 
 
 app.post('/api/login', jsonParser, (req, res) => {
+  console.log('hit');
   let userInput = null;
   const username = req.body.user.email;
   const authUser = { name: username };
@@ -67,7 +68,7 @@ app.post('/api/login', jsonParser, (req, res) => {
       userInput = userInput.substr(1);
       userInput = userInput.slice(0, -1);
       if (await bcrypt.compare(req.body.user.password, userInput)) {
-        res.send({ accessToken: accessToken});
+        res.send({ accessToken: accessToken });
       } else {
         console.log(`${req.body.user.password} does not equal ${userInput}`);
         res.status('401').end('Invalid Username or Password');
