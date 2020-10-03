@@ -2,15 +2,14 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 var bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
 // const jwt = require('jsonwebtoken');
 var jsonParser = bodyParser.json();
 
 // create application/x-www-form-urlencoded parser
 app.use(cors());
 app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     next();
 });
@@ -18,8 +17,8 @@ const db_functions = require('./db_functions');
 
 app.post('/api/postSignup', jsonParser, async (req, res) => {
     try {
-        await db_functions.postSignup(req.body.formdata.password);
-        res.end();
+        const results = await db_functions.postSignup(req.body.formdata.password, req);
+        res.status(JSON.parse(results).code).end(JSON.parse(results).msg);
 
     } catch {
         res.status(500).send();

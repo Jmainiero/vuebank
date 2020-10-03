@@ -1,5 +1,5 @@
 <template>
-  <form action="#" @submit.prevent="signup">
+  <form action="#" @submit.prevent="signup" autocomplete="off">
     <div id="bank_signup">
       <h1>Sign Up</h1>
       <div class="form__group">
@@ -16,7 +16,11 @@
         <input type="tel" placeholder="Phone Number" v-model="formdata.phone" />
       </div>
       <div class="form__group">
-        <input type="password" placeholder="Password" v-model="formdata.password" />
+        <input
+          type="password"
+          placeholder="Password"
+          v-model="formdata.password"
+        />
         <input type="password" placeholder="Confirm Password" />
       </div>
       <button>Create Account</button>
@@ -54,13 +58,13 @@ export default {
         })
         .then(function (response) {
           console.log(response);
-          if(response.status == 200){
-          window.location = '/';
+          if (response.status == 200) {
+            self.$router.push("/");
           }
         })
         .catch(function (error) {
           // handle error
-          console.log(error.response);
+          console.log(error);
 
           if (error.response.status === 409) {
             alert(error.response.data);
@@ -83,7 +87,7 @@ export default {
   top: 0;
   max-width: 60%;
   padding: 6rem 0rem;
-  background-image: linear-gradient(to right bottom, #254e58, #112D32);
+  background-image: linear-gradient(to right bottom, #254e58, #112d32);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
   border-radius: $default-border-radius;
 }

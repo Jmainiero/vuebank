@@ -1,23 +1,26 @@
-
 var db = require('./db_con');
+const bcrypt = require('bcrypt');
 
-const postSignup = async (password) => {
+const postSignup = async (password, req) => {
   try {
-    // console.log(req.body.formdata);
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    db.query(`INSERT INTO accounts(firstName, lastName,email,password,phoneNumber,address,city,state,zip) VALUES('${req.body.formdata.first}','${req.body.formdata.last}','${req.body.formdata.email}','${hashedPassword}',${req.body.formdata.phone},'${req.body.formdata.address}','${req.body.formdata.city}','${req.body.formdata.state}',${req.body.formdata.zip})`, function (err, result) {
-      if (err) {
-        if (err.code == 'ER_DUP_ENTRY') res.status(409).send('ERROR. Account Already Exits.');
-        if (err && err.code != 'ER_DUP_ENTRY') throw err;
-
-      }
-      console.log(result);
-      return 200;
+    const ck_id = Math.ceil(1000 + Math.random() * 9000000000000000);
+    const sv_id = Math.ceil(1000 + Math.random() * 90000000000);
+    const query = new Promise((resolve, reject) => {
+      db.query(`INSERT INTO accounts(firstName, lastName,email,password,phoneNumber,address,city,state,zip, ck_id, sv_id) VALUES('${req.body.formdata.first}','${req.body.formdata.last}','${req.body.formdata.email}','${hashedPassword}',${req.body.formdata.phone},'${req.body.formdata.address}','${req.body.formdata.city}','${req.body.formdata.state}',${req.body.formdata.zip}, ${ck_id}, ${sv_id})`, function async(err, result) {
+        if (err) {
+          if (err.code == 'ER_DUP_ENTRY') reject();
+          if (err && err.code != 'ER_DUP_ENTRY') throw err;
+        }
+        // console.log(result);
+        console.log(result.insertId);
+        resolve(JSON.stringify({ 'msg': 'Account Created', 'code': 200 }));
+      });
     });
-
+    ckGenerateTrans();
+    return await query;
   } catch {
-    return 500;
+    return JSON.stringify({ 'msg': 'Account with that email address already exists.', 'code': 409 });
   }
 };
 
@@ -95,6 +98,7 @@ const ckGenerateTrans = async () => {
       let credit = c[Math.ceil(Math.random() * p.length - 1)];
       const q = await db.query(`INSERT INTO ck_trans(accountId, ck_id, trans_id, vendor, transAmnt, posted, credit) VALUES((SELECT accountId from accounts WHERE email = '${username}'), (SELECT ck_id from accounts WHERE email = '${username}'), ${transId}, ?, ?, ?, ?)`, [vendor, transAmnt, posted, credit]);
     } else {
+      updateBalance();
       return { 'code': 200, "msg": 'COMPLETED TRANSACTION GENERATION' };
 
     }
@@ -134,7 +138,7 @@ const updateBalance = async () => {
   //Pending - Anything with 'n' as posted
 
   //Available Balance Checking
-  await db.query(`UPDATE ck_bal SET availBal = (SELECT todaysBal - (SELECT SUM(transAmnt) from ck_trans WHERE posted ='n') FROM ck_bal WHERE accountId = ?) WHERE accountId=?`, [1, 1], (err, result) => {
+  await db.query(`UPDATE ck_bal SET availBal = (SELECT todaysBal - (SELECT IF(SUM(transAMnt) IS NOT null, SUM(transAmnt), 0) from ck_trans WHERE posted = 'n') FROM ck_bal WHERE accountId = ?) WHERE accountId=?`, [1, 1], (err, result) => {
     if (err) throw err;
 
     console.log('Checking: Available Balance Completed.')
@@ -161,7 +165,7 @@ const updateBalance = async () => {
     // console.log(result[0]['count(transAmnt)']);
     if (result[0]['count(transAmnt)'] == 0) {
       //(SELECT todaysBal - (SELECT (SELECT SUM(transAmnt) from sv_trans WHERE credit ='y')) FROM sv_bal WHERE accountId = 1);
-      await db.query(`UPDATE sv_bal SET availBal =(SELECT todaysBal - (SELECT (SELECT SUM(transAmnt) from sv_trans WHERE credit ='y')) FROM sv_bal WHERE accountId = ?) WHERE accountId=?`, [1, 1], (err, result) => {
+      await db.query(`UPDATE sv_bal SET availBal = (SELECT todaysBal - (SELECT IF(SUM(transAMnt) IS NOT null, SUM(transAmnt), 0) from sv_trans WHERE posted = 'n') FROM sv_bal WHERE accountId = ?) WHERE accountId=?`, [1, 1], (err, result) => {
         if (err) throw err;
         console.log('Savings: Available Balance Completed.')
       });
@@ -224,7 +228,7 @@ const transfer = async (toAcc, toAmnt, username, req) => {
 const getTransactions = async (username) => {
   try {
     const query = new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM ck_trans WHERE accountId = (SELECT accountId from accounts WHERE email = ?) LIMIT 10`, username, function async(err, result) {
+      db.query(`SELECT *, DATE(created_date) as 'Date' FROM ck_trans WHERE accountId = (SELECT accountId from accounts WHERE email = ?) LIMIT 10`, username, function async(err, result) {
         if (err) throw err;
 
         if (result == '') {

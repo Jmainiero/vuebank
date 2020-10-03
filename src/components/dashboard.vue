@@ -13,21 +13,21 @@
         <tbody>
           <tr>
             <td class="column1">Checking</td>
-            <td class="column2">{{ck_bal}}</td>
-            <td class="column3">{{ck_starting}}</td>
-            <td class="column4">{{ck_pending}}</td>
+            <td class="column2">{{ ck_bal }}</td>
+            <td class="column3">{{ ck_starting }}</td>
+            <td class="column4">{{ ck_pending }}</td>
           </tr>
           <tr>
             <td class="column1">Savings</td>
-            <td class="column2">{{sv_bal}}</td>
-            <td class="column3">{{sv_starting}}</td>
-            <td class="column4">{{sv_pending}}</td>
+            <td class="column2">{{ sv_bal }}</td>
+            <td class="column3">{{ sv_starting }}</td>
+            <td class="column4">{{ sv_pending }}</td>
           </tr>
           <tr class="accOverview-total">
             <td class="column1">Total</td>
-            <td class="column2">{{tot_bal}}</td>
-            <td class="column3">{{tot_start}}</td>
-            <td class="column4">{{tot_pending}}</td>
+            <td class="column2">{{ tot_bal }}</td>
+            <td class="column3">{{ tot_start }}</td>
+            <td class="column4">{{ tot_pending }}</td>
           </tr>
         </tbody>
       </table>
@@ -42,23 +42,30 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(transaction,i) in transactions" :key="i">
-            <td>{{ transaction.created_date }}</td>
+          <tr v-for="(transaction, i) in transactions" :key="i">
+            <td>{{ transaction.Date }}</td>
             <td>{{ transaction.vendor }}</td>
-            <td>{{ transaction.transAmnt }}</td>
+            <td>${{ transaction.transAmnt }}</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="grid--item grid--three grid__ads">
       <h2>Digital Banking Tutorials</h2>
-      <p>Get updates, tools and resources to help support your financial needs and goals. We are committed to helping you find solutions to your financial challenges.</p>
+      <p>
+        Get updates, tools and resources to help support your financial needs
+        and goals. We are committed to helping you find solutions to your
+        financial challenges.
+      </p>
 
       <a href="#" class="resources">Find Resources</a>
     </div>
     <div class="grid--item grid--four grid__ads">
       <h2>New to Digital Banking</h2>
-      <p>Get how-to tours of our Online Banking and TD Bank app services with these interactive tutorials</p>
+      <p>
+        Get how-to tours of our Online Banking and TD Bank app services with
+        these interactive tutorials
+      </p>
 
       <a href="#" class="exploreTuts">Explore Tutorials</a>
     </div>
@@ -280,7 +287,7 @@ tbody tr:nth-child(even) {
   background-color: #f5f5f5;
 }
 
-tbody tr:last-child {
+.account_info tr:last-child {
   font-weight: 700;
   font-size: 2.25rem !important;
 }
