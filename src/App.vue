@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <headerNav />
+    <headerNav></headerNav>
     <router-view />
+    <footerSec></footerSec>
   </div>
 </template>
 
 <script>
 import headerNav from "@/components/headerNav.vue";
+import footerSec from "@/components/footer.vue";
 export default {
   components: {
     headerNav,
+    footerSec
   },
   methods: {
     checkSession() {
@@ -53,11 +56,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: 0rem 3rem 3rem;
-  background: rgba(#bab2b5, 0.5);
+  // margin: 0rem 3rem 3rem;
+  // background: rgba(#bab2b5, 0.5);
   // padding: 0rem 3rem 3rem 3rem;
   // border-radius: $default-border-radius;
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+  // box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
 }
 
 #nav {

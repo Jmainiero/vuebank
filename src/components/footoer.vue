@@ -1,11 +1,9 @@
 <template>
-  <nav id="primary-nav">
-    <router-link v-if="username == ''" to="/">Home</router-link>
-    <router-link v-else to="/">Home</router-link>
-    <router-link v-if="username == ''" to="/signup">Sign Up</router-link>
-    <router-link v-if="username != ''" to="/transfer">Transfer</router-link>
-    <router-link v-if="username != ''" @click.native="logout" to="/">Log Out</router-link>
-  </nav>
+  <footer>
+    <p>Thank you for visiting the world worst bank. I hope you didn't arrive with high exepectations.</p>
+
+    <p>This website was designed and built by John Mainiero&copy </p>
+  </footer>
 </template>
 
 <script>
@@ -48,12 +46,14 @@ export default {
 @import "src/scss/layout/_grid.scss";
 
 #primary-nav {
-  color: #feffff;
   text-align: right;
   padding: 1rem !important;
+  // margin-bottom: 5rem;
   font-size: 2.5rem;
   left: 0;
-  background: #17252A;
+  /* background-image: linear-gradient(to bottom, #112d32, #254e58); */
+  /* box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1); */
+  /* opacity: 0.8; */
 }
 
 #primary-nav a {
@@ -64,13 +64,12 @@ export default {
   transition: ease-in-out 0.2s all;
 
   &:last-child {
-    background: rgba(#2b7a78, 0.9);
-    font-weight: 700;
-    color: #def2f1;
+    background: rgba(#123c69, 0.9);
+    color: #c5c6c7;
   }
 
   &:not(:last-child) {
-    color: inherit;
+    color: #123c69;
   }
 
   border-radius: $default-border-radius;
@@ -79,7 +78,7 @@ export default {
 
 #primary-nav a:hover {
   text-decoration: none;
-  color: #3aafa9;
+  color: #ac3b61;
   transform: scale(1.2);
   margin: 0 1rem 0 2rem;
   background: transparent;

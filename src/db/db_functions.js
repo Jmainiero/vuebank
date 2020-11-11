@@ -14,10 +14,10 @@ const postSignup = async (password, req) => {
         }
         // console.log(result);
         console.log(result.insertId);
+        ckGenerateTrans(result.insertId);
         resolve(JSON.stringify({ 'msg': 'Account Created', 'code': 200 }));
       });
     });
-    ckGenerateTrans();
     return await query;
   } catch {
     return JSON.stringify({ 'msg': 'Account with that email address already exists.', 'code': 409 });
@@ -78,7 +78,7 @@ const svAccountInfo = async (username) => {
 };
 
 //used to populate transaction table with misc data.
-const ckGenerateTrans = async () => {
+const ckGenerateTrans = async (insertId) => {
   //Generate random list of transactions and post them into the database.
   var x = ["Walmart", "The Kroger Co.", "Amazon", "Costco", "The Home Depot", "Walgreens Boots Alliance", "CVS Health Corporation", "Target", "Lowe's Companies", "Albertsons Companies", "Royal Ahold Delhaize USA", "Apple Stores / iTunes", "Best Buy", "McDonald's", "Publix Super Markets", "TJX Companies", "Aldi", "Macy's", "Dollar General", "H-E-B Grocery", "Dollar Tree", "Rite Aid", "Kohl's", "Verizon Wireless", "YUM! Brands", "Meijer", "Ace Hardware", "Starbucks", "Wakefern / ShopRite", "Nordstrom", "Sears Holdings", "7-Eleven", "Ross Stores", "Subway", "AT&T Wireless", "Gap", "BJ's Wholesale Club", "J.C. Penney Co.", "Bed Bath & Beyond", "Qurate Retail Group (formerly QVC)", "L Brands", "Menard", "Southeastern Grocers", "Health Mart Systems", "Good Neighbor Pharmacy", "Hy-Vee", "AutoZone", "Alimentation Couche-Tard", "Wendy's", "Chick-fil-A", "Dunkin' Brands Group", "Giant Eagle", "O'Reilly Auto Parts", "Wegmans Food Market", "Burger King Worldwide", "Dick's Sporting Goods", "Darden Restaurants", "PetSmart", "Sherwin-Williams", "Staples", "Army & Air Force Exchange", "Bass Pro", "Tractor Supply Co.", "WinCo Foods", "Save-A-Lot", "Ascena Retail Group", "Dine Brands Global", "Office Depot", "GameStop", "Dillard's", "Burlington Coat Factory", "ToysRUs", "Ulta Salon, Cosmetics & Fragrance", "Sephora (LVMH)", "Foot Locker", "Ikea North American Svcs.", "Domino's Pizza", "Academy", "Panera Bread Company", "AVB Brandsource", "Signet Jewelers", "Big Lots", "Williams-Sonoma", "Saks Fifth Avenue / Lord & Taylor", "Defense Commissary Agency", "Hobby Lobby Stores", "Speedway", "Michaels Stores", "True Value Co.", "Discount Tire", "Sprouts Farmers Market", "Exxon Mobil Corporation", "Neiman Marcus", "Jack in the Box", "Shell Oil Company", "Sonic", "Chipotle Mexican Grill", "SUPERVALU", "Belk", "Petco Animal Supplies"];
 
@@ -91,12 +91,13 @@ const ckGenerateTrans = async () => {
   let i = 0;
   for (let nr in y) {
     if (i != y.length - 1) {
+      console.log(`Inserting with the id ${insertId}`);
       let transId = Math.ceil(10000 + Math.random() * 9000000000000000);
       let transAmnt = y[Math.ceil(Math.random() * y.length - 1)];
       let vendor = x[Math.ceil(Math.random() * x.length - 1)];
       let posted = p[Math.ceil(Math.random() * p.length - 1)];
       let credit = c[Math.ceil(Math.random() * p.length - 1)];
-      const q = await db.query(`INSERT INTO ck_trans(accountId, ck_id, trans_id, vendor, transAmnt, posted, credit) VALUES((SELECT accountId from accounts WHERE email = '${username}'), (SELECT ck_id from accounts WHERE email = '${username}'), ${transId}, ?, ?, ?, ?)`, [vendor, transAmnt, posted, credit]);
+      const q = await db.query(`INSERT INTO ck_trans(accountId, ck_id, trans_id, vendor, transAmnt, posted, credit) VALUES(${insertId}, (SELECT ck_id from accounts WHERE accountId = '${insertId}'), ${transId}, ?, ?, ?, ?)`, [vendor, transAmnt, posted, credit]);
     } else {
       updateBalance();
       return { 'code': 200, "msg": 'COMPLETED TRANSACTION GENERATION' };

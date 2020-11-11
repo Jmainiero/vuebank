@@ -1,15 +1,13 @@
 <template>
-  <div class="login">
-    <form action="#" @submit.prevent="login">
-      <div id="bank_login">
-        <h1>Login</h1>
-        <input type="email" placeholder="Email" v-model="user.email" />
-        <input type="password" placeholder="Password" v-model="user.password" />
-        <button>Login</button>
-        <!-- <button disabled="disabled">Sign</button> -->
-      </div>
-    </form>
-  </div>
+  <form action="#" @submit.prevent="login">
+    <div id="bank_login">
+      <h1>Bank of VueJS</h1>
+      <input type="email" placeholder="Email" v-model="user.email" />
+      <input type="password" placeholder="Password" v-model="user.password" />
+      <button>Login</button>
+      <!-- <button disabled="disabled">Sign</button> -->
+    </div>
+  </form>
 </template>
 <script>
 const axios = require("axios");
@@ -65,28 +63,19 @@ export default {
 @import "src/scss/base/_mixins.scss";
 @import "src/scss/base/_variables.scss";
 @import "src/scss/layout/_grid.scss";
-
-.login {
-  background: #3aafa9;
-  color: #000000;
-  height: 85vh;
-  position: relative;
-}
-
 #bank_login {
   margin: 0 auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  width: 50%;
-  max-width: 50%;
+  left: 0;
+  top: 0;
+  max-width: 60%;
   padding: 6rem 0rem;
+  background-image: linear-gradient(to right bottom, #254e58, #112d32);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
-  background: #ffffff;
+  border-radius: $default-border-radius;
 }
 
 #bank_login h1 {
+  color: #ffffff;
   font-weight: 700;
   font-size: 3rem;
   text-transform: uppercase;
@@ -103,8 +92,7 @@ export default {
   padding: 2rem;
   width: 50%;
   border: none;
-  border-bottom: 1px solid #17252A;
-  // border-radius: $default-border-radius;
+  border-radius: $default-border-radius;
 }
 #bank_login input:not(:last-child) {
   margin-bottom: 3rem;
@@ -121,7 +109,7 @@ export default {
 }
 
 #bank_login button {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   background-color: #596e79;
   text-transform: uppercase;
   text-decoration: none;
@@ -129,6 +117,7 @@ export default {
   display: inline-block;
   border-radius: $default-border-radius;
   transition: all 0.2s;
+  position: relative;
   border: none;
   cursor: pointer;
   color: #ffffff;

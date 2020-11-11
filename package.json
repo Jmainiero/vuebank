@@ -6,10 +6,13 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "devStart": "nodemon src/db/functions.js",
-    "startAuth": "nodemon src/server/auth.js"
+    "dev": "nodemon src/db/functions.js",
+    "auth": "nodemon src/server/auth.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/vue-fontawesome": "^2.0.0",
     "axios": "^0.19.2",
     "bcrypt": "^5.0.0",
     "bootstrap": "^4.5.0",
@@ -23,6 +26,7 @@
     "promise": "^8.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.3.4",
+    "vue-slick-carousel": "^1.0.6",
     "vuex": "^3.5.1",
     "vuex-persistedstate": "^3.1.0"
   },
