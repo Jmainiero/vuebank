@@ -46,8 +46,7 @@ export default {
 }
 body {
   font-family: "Lato", sans-serif !important;
-  // background: rgba(#bab2b5, 0.5);
-  max-width: 1920px;
+  // max-width: 1920px;
   margin: auto;
 }
 
@@ -56,11 +55,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  // margin: 0rem 3rem 3rem;
-  // background: rgba(#bab2b5, 0.5);
-  // padding: 0rem 3rem 3rem 3rem;
-  // border-radius: $default-border-radius;
-  // box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
 }
 
 #nav {

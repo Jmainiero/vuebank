@@ -104,6 +104,7 @@ export default {
   width: 50%;
   border: none;
   border-bottom: 1px solid #17252A;
+  transition: 0.3s all;
   // border-radius: $default-border-radius;
 }
 #bank_login input:not(:last-child) {

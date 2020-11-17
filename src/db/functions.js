@@ -83,6 +83,7 @@ app.post(('/api/transfer'), jsonParser, async (req, res) => {
 app.post(('/ckTrans'), jsonParser, async (req, res) => {
     try {
         const results = await db_functions.getTransactions(req.body.user);
+        console.log(results);
         res.end(results);
     } catch {
         res.status(500).send();

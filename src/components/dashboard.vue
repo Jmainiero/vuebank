@@ -1,42 +1,70 @@
 <template>
-  <div class="grid">
-    <div class="grid--item grid--one grid__table">
-      <table class="account_info">
+  <section class="dashboard">
+    <div class="welcome-banner">
+      <div class="welcome-baner--login-detail welcome-banner--block">
+        <p class="welcome-banner--line">Welcome Back, John!</p>
+        <p class="welcome-banner--status">Your last login was 09/05/2015</p>
+      </div>
+      <div class="welcome-banner--balance welcome-banner--block">
+        <p class="welcome-banner--totalbal--text">Total Balance</p>
+        <p class="welcome-banner--totalbal--digit">{{ tot_bal }}</p>
+      </div>
+      <button class="welcome-banner--transfer">Make a Transfer</button>
+    </div>
+    <div class="container">
+    <div class="account-overview">
+      <!-- <h2>Recent Transactions</h2> -->
+      <table class="trans_info">
         <thead>
           <tr class="accOverview-head">
-            <th class="column1">Account</th>
-            <th class="column2">Available Balance</th>
-            <th class="column3">Starting Balance</th>
-            <th class="column4">Pending Transacitons</th>
+            <th class="column1">Type</th>
+            <th class="column1">Account Name</th>
+            <th class="column2">Status</th>
+            <th class="column3">Currency</th>
+            <th class="column3">Balance</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="column1">Checking</td>
-            <td class="column2">{{ ck_bal }}</td>
-            <td class="column3">{{ ck_starting }}</td>
-            <td class="column4">{{ ck_pending }}</td>
+            <td>Checking</td>
+            <td>*******967</td>
+            <td>Active</td>
+            <td>USD</td>
+            <td>$50,000</td>
           </tr>
           <tr>
-            <td class="column1">Savings</td>
-            <td class="column2">{{ sv_bal }}</td>
-            <td class="column3">{{ sv_starting }}</td>
-            <td class="column4">{{ sv_pending }}</td>
-          </tr>
-          <tr class="accOverview-total">
-            <td class="column1">Total</td>
-            <td class="column2">{{ tot_bal }}</td>
-            <td class="column3">{{ tot_start }}</td>
-            <td class="column4">{{ tot_pending }}</td>
+            <td>Savings</td>
+            <td>*******967</td>
+            <td>Active</td>
+            <td>USD</td>
+            <td>$50,000</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="grid--item grid--two grid__trans">
+    <div class="utility-table">
+      <!-- <h2>Recent Transactions</h2> -->
+      <div class="transfer">
+        <p>Transfer Balance</p>
+        <button>Transfer Now</button>
+      </div>
+      <div class="loan-apply">
+        <p>Apply for Loan</p> 
+        <button>Apply Now</button>
+      </div>
+      <div class="offers">
+        <p>Available Offers</p>
+        <button>See Offers</button>
+      </div>
+    </div>
+    </div>
+    <div class="recent_transactions">
+      <!-- <h2>Recent Transactions</h2> -->
       <table class="trans_info">
         <thead>
           <tr class="accOverview-head">
             <th class="column1">Date</th>
+            <th class="column1">Account</th>
             <th class="column2">Description</th>
             <th class="column3">Amount</th>
           </tr>
@@ -44,32 +72,14 @@
         <tbody>
           <tr v-for="(transaction, i) in transactions" :key="i">
             <td>{{ transaction.Date }}</td>
+            <td>{{ transaction.ck_id }}</td>
             <td>{{ transaction.vendor }}</td>
             <td>${{ transaction.transAmnt }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="grid--item grid--three grid__ads">
-      <h2>Digital Banking Tutorials</h2>
-      <p>
-        Get updates, tools and resources to help support your financial needs
-        and goals. We are committed to helping you find solutions to your
-        financial challenges.
-      </p>
-
-      <a href="#" class="resources">Find Resources</a>
-    </div>
-    <div class="grid--item grid--four grid__ads">
-      <h2>New to Digital Banking</h2>
-      <p>
-        Get how-to tours of our Online Banking and TD Bank app services with
-        these interactive tutorials
-      </p>
-
-      <a href="#" class="exploreTuts">Explore Tutorials</a>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -189,123 +199,209 @@ export default {
 @import "src/scss/base/_variables.scss";
 @import "src/scss/layout/_grid.scss";
 
-.grid {
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  padding: 1rem;
-
-  &--one {
-    grid-column: span 2;
-  }
-  &--two {
-    grid-row: span 5;
-  }
-
-  &--three,
-  &--four {
-    grid-column: span 1;
-    h2 {
-      display: block;
-      position: relative;
-      font-size: 2.5rem;
-      text-transform: uppercase;
-      color: #123c69;
-    }
-    h2:before {
-      content: "";
-      position: absolute;
-      width: 50%;
-      bottom: -15px;
-      left: 25%;
-      border-bottom: 2px solid #123c69;
-    }
-    p {
-      padding: 2rem;
-      margin: 2rem;
-      font-size: 1.5rem;
-      height: 110px;
-    }
-    a {
-      font-size: 1.5rem;
-      text-decoration: none;
-      color: $color-white;
-      padding: 2rem;
-      background-color: #123c69;
-      font-family: inherit;
-      border-radius: $default-border-radius;
-    }
-  }
+.container{
+  display: flex;
+  justify-content: center;
+  margin-left: 10%;
 }
 
-.accountOverview {
-  height: 50vh;
-  border-radius: $default-border-radius;
-  margin: 0rem 10rem;
-  color: $color-white;
-  padding: 1rem;
 
-  a,
-  a:visited {
-    color: inherit;
-    text-decoration: none;
+.account-overview,
+.recent_transactions,
+.utility-table {
+  margin-bottom: 5rem;
+}
+
+.welcome-baner--login-detail {
+  float: left;
+  margin-left: 1rem;
+  & p {
     display: block;
-    margin-bottom: 2rem;
+    text-align: left;
   }
 }
-//Testing
 
-table {
-  border-collapse: collapse;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  width: 100%;
-}
 
-table thead tr {
-  height: 60px;
-  // background: #ac3b61;
-  background: #123c69;
-}
-table tbody tr {
-  height: 75px;
-}
-table tbody tr:last-child {
-  border: 0;
-}
+.welcome-banner {
+  max-width: 100%;
+  max-width: 100%;
+  padding: 1rem;
+  background-color: #2b7A78;
+  color: #feffff;
+  height: 100px;
+  margin-bottom: 2rem;
 
-.accOverview-head th {
-  font-size: 2rem !important;
-  color: $color-white;
-  text-transform: uppercase;
-  font-weight: 500;
-}
+  // &--block {
+  //   display: block;
+  // }
 
-tbody tr:nth-child(even) {
-  background-color: #f5f5f5;
-}
+  &--balance {
+    display: inline-block;
+  }
+  & button {
+    // position: absolute;
+    float: right;
+  }
+  & p {
+    margin: 1rem;
+    // display: inline-block;
+  }
 
-.account_info tr:last-child {
-  font-weight: 700;
-  font-size: 2.25rem !important;
+  &--line {
+    font-size: 2rem;
+  }
+  &--status {
+    font-size: 1.5rem;
+  }
+  &--totalbal--text {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+  &--totalbal--digit {
+    font-size: 2rem;
+  }
+  &--transfer {
+    padding: 3rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 1.5rem;
+    transition: 0.3s all;
+  }
 }
+.account-overview {
+  width: 60%;
+  & table {
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    // margin-left: 10%;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
 
-tbody tr {
-  font-size: 2rem !important;
-  color: $color-black;
-  line-height: 1.2;
-  font-weight: unset;
-  transition: 0.3s all;
+    & thead tr {
+      height: 60px;
+      font-size: 2.5rem !important;
+      color: #2b7a78;
+    }
+    & tbody tr {
+      height: 50px;
+    }
+    & tbody tr:last-child {
+      border: 0;
+    }
+    & tbody tr {
+      border-bottom: 2px solid #def2f1;
+    }
+
+    & td {
+      font-size: 1.5rem;
+    }
+
+    & tbody tr {
+      font-size: 2rem !important;
+      color: $color-black;
+      line-height: 1.2;
+      font-weight: unset;
+      transition: 0.3s all;
+    }
+    & tbody tr:hover {
+      color: #17252A;
+      background-color: #def2f1;
+      transform: scale(1.05);
+      font-weight: 700;
+      overflow: none;
+      cursor: pointer;
+    }
+  }
 }
+.utility-table{
+  width: 40%;
+  margin-left: 1rem;
+  & table {
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 72%;
+    // margin-left: 70%;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
 
-tbody tr:hover {
-  color: #ac3b51;
-  background-color: #f5f5f5;
-  transform: scale(1.05);
-  font-weight: 700;
-  overflow: none;
-  cursor: pointer;
+    & thead tr {
+      height: 60px;
+      font-size: 2.5rem !important;
+      color: #2b7a78;
+    }
+    & tbody tr {
+      height: 50px;
+    }
+    & tbody tr:last-child {
+      border: 0;
+    }
+    & tbody tr {
+      border-bottom: 2px solid #def2f1;
+    }
+
+    & td {
+      font-size: 1.5rem;
+    }
+
+    & tbody tr {
+      font-size: 2rem !important;
+      color: $color-black;
+      line-height: 1.2;
+      font-weight: unset;
+      transition: 0.3s all;
+    }
+    & tbody tr:hover {
+      color: #17252A;
+      background-color: #def2f1;
+      transform: scale(1.05);
+      font-weight: 700;
+      overflow: none;
+      cursor: pointer;
+    }
+  }
+}
+.recent_transactions {
+  & table {
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+
+    & thead tr {
+      height: 60px;
+      font-size: 2.5rem !important;
+      color: #2b7a78;
+    }
+    & tbody tr {
+      height: 75px;
+    }
+    & tbody tr:last-child {
+      border: 0;
+    }
+    & tbody tr {
+      border-bottom: 2px solid #def2f1;
+    }
+
+    & tbody tr {
+      font-size: 2rem !important;
+      color: $color-black;
+      line-height: 1.2;
+      font-weight: unset;
+      transition: 0.3s all;
+    }
+
+    & tbody tr:hover {
+      color: #17252A;
+      background-color: #def2f1;
+      transform: scale(1.05);
+      font-weight: 700;
+      overflow: none;
+      cursor: pointer;
+    }
+  }
 }
 </style>

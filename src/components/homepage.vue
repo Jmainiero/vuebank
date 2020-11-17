@@ -229,7 +229,7 @@ button:hover {
   position: absolute;
   color: #ffffff;
   padding: 2.5rem;
-  background-color: rgba(#aaabb8, 0.5);
+  background-color: rgba(#17252a, 0.8);
   border-radius: 1rem;
   & h1 {
     font-size: 2rem;
