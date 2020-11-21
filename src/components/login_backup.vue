@@ -36,7 +36,7 @@ export default {
     login() {
       let self = this;
       axios
-        .post("http://localhost:4000/api/login", {
+        .post("http://localhost:3000/api/login", {
           user: self.user,
         })
         .then(function (response) {

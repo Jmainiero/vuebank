@@ -1,9 +1,8 @@
 <template>
   <nav id="primary-nav">
     <router-link v-if="username == ''" to="/">Home</router-link>
-    <router-link v-else to="/">Home</router-link>
-    <router-link v-if="username == ''" to="/signup">Sign Up</router-link>
-    <router-link v-if="username != ''" to="/transfer">Transfer</router-link>
+    <!-- <router-link v-if="username == ''" to="/signup">Sign Up</router-link> -->
+    <!-- <router-link v-if="username != ''" to="/transfer">Transfer</router-link> -->
     <router-link v-if="username != ''" @click.native="logout" to="/">Log Out</router-link>
   </nav>
 </template>
