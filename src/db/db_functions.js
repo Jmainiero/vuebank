@@ -10,7 +10,7 @@ const postSignup = async (password, req) => {
       db.query(`INSERT INTO accounts(firstName, lastName,email,password,phoneNumber,address,city,state,zip, ck_id, sv_id) VALUES('${req.body.formdata.first}','${req.body.formdata.last}','${req.body.formdata.email}','${hashedPassword}',${req.body.formdata.phone},'${req.body.formdata.address}','${req.body.formdata.city}','${req.body.formdata.state}',${req.body.formdata.zip}, ${ck_id}, ${sv_id})`, function async(err, result) {
         if (err) {
           if (err.code == 'ER_DUP_ENTRY') reject();
-          if (err && err.code != 'ER_DUP_ENTRY') throw err;
+          if (err && err.code != 'ER_DUP_ENTRY') throw err; 
         }
         // console.log(result);
         console.log(result.insertId);
