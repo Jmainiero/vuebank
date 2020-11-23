@@ -19,7 +19,7 @@ export default {
     logout() {
       let self = this;
       axios
-        .delete("http://localhost:4000/api/logout/", {
+        .delete("http://localhost:3000/api/logout/", {
           data: {
             email: self.username,
           },

@@ -1,5 +1,5 @@
 require('dotenv').config();
-var db = require('./db_con');
+var db = require('../server/db_con');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -92,6 +92,7 @@ app.post(('/ckTrans'), jsonParser, async (req, res) => {
         res.status(500).send();
     }
 });
+//Migrated from auth.js
 app.post('/api/token', (req, res) => {
     const refreshToken = req.body.user.token.toString();
     const email = req.body.user.email;
@@ -109,10 +110,8 @@ app.post('/api/token', (req, res) => {
   
   });
   
-  app.delete('/api/logout/', (req, res) => {
-    console.log(req.body);
+  app.delete('/api/logout/', jsonParser,(req, res) => {
     const username = req.body.email;
-    console.log(username);
     db.query(`DELETE tokens FROM tokens WHERE tokens.email ='${username}'`, function (err) {
       if (err) throw err;
   
@@ -121,9 +120,11 @@ app.post('/api/token', (req, res) => {
   });
   
   
-  
+  /*This function relies on the db_con file have multiple statements enabled.
+
+      multipleStatements: true,
+  */
   app.post('/api/login', jsonParser, (req, res) => {
-    console.log('hit');
     let userInput = null;
     const username = req.body.user.email;
     const authUser = { name: username };
@@ -131,15 +132,13 @@ app.post('/api/token', (req, res) => {
     const accessToken = generateAccessToken(authUser);
     const refreshToken = jwt.sign(authUser, process.env.REFRESH_TOKEN_SECRET);
   
-    db.query(`SELECT password FROM accounts WHERE email = '${username}';
-    INSERT INTO tokens(accountId, email, refreshToken) VALUES((SELECT accountId from accounts WHERE email = '${username}'),'${username}', '${refreshToken}')`, async function (err, result) {
+    db.query(`SELECT password from accounts where email = ?;
+    INSERT INTO tokens(accountId, email, refreshToken) VALUES((SELECT accountId from accounts WHERE email = ?),'${username}', '${refreshToken}')`,[username, username], async function (err, result) {
       if (err) {
         if (err.code == 'ER_DUP_ENTRY') res.status(403).end('Error');
         throw err;
-  
       }
       userInput = (JSON.stringify(result[0]) == undefined) ? res.status(401).end('Account does not exist') : JSON.stringify(result[0][0].password);
-  
       if (userInput == null) {
         return res.status(401).send('Invalid Username or Password');
       }

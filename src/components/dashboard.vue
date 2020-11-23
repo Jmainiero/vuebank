@@ -2,7 +2,7 @@
   <section class="dashboard">
     <div class="welcome-banner">
       <div class="welcome-baner--login-detail welcome-banner--block">
-        <p class="welcome-banner--line">Welcome Back, John!</p>
+        <p class="welcome-banner--line">Welcome Back, Test!</p>
         <p class="welcome-banner--status">Your last login was 09/05/2015</p>
       </div>
       <div class="welcome-banner--balance welcome-banner--block">

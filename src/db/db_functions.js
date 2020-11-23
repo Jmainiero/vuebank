@@ -231,7 +231,7 @@ const getTransactions = async (username) => {
     const query = new Promise((resolve, reject) => {
       db.query(`SELECT *, DATE(created_date) as 'Date' FROM ck_trans WHERE accountId = (SELECT accountId from accounts WHERE email = ?) LIMIT 10`, username, function async(err, result) {
         if (err) throw err;
-        console.log(result);
+        // console.log(result);
         if (result == '') {
           console.log('Empty Data');
           return { 'status': 204, 'msg': 'No Data found' };

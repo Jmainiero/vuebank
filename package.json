@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "nodemon src/db/functions.js",
-    "auth": "nodemon src/server/auth.js"
+    "auth": "nodemon src/server/auth.js",
+    "start": "node src/db/functions.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
