@@ -32,8 +32,8 @@ export default {
     userStatus() {
       this.$store.dispatch("setStatus");
     },
-    setUser(username) {
-      this.$store.dispatch("setUser", username);
+    setUser(payload) {
+      this.$store.dispatch("setUser", payload);
     },
     login() {
       let self = this;
@@ -43,10 +43,13 @@ export default {
         })
         .then(function (response) {
           if (response.status == 200) {
+            sessionStorage.setItem("authtk", response.data.accessToken);
             self.userStatus();
-            self.setUser(self.user.email);
+            self.setUser({
+              username: self.user.email,
+              authTk: response.data.accessToken,
+            });
             self.$router.push("/dashboard");
-            sessionStorage.setItem("session", "true");
           }
         })
         .catch(function (error) {
@@ -103,7 +106,7 @@ export default {
   padding: 2rem;
   width: 50%;
   border: none;
-  border-bottom: 1px solid #17252A;
+  border-bottom: 1px solid #17252a;
   transition: 0.3s all;
   // border-radius: $default-border-radius;
 }

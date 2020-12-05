@@ -3,12 +3,13 @@
     <router-link v-if="username == ''" to="/">Home</router-link>
     <!-- <router-link v-if="username == ''" to="/signup">Sign Up</router-link> -->
     <!-- <router-link v-if="username != ''" to="/transfer">Transfer</router-link> -->
-    <router-link v-if="username != ''" @click.native="logout" to="/">Log Out</router-link>
+    <router-link v-if="username != ''" @click.native="logout" to="/"
+      >Log Out</router-link
+    >
   </nav>
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   computed: {
     username() {
@@ -17,24 +18,8 @@ export default {
   },
   methods: {
     logout() {
-      let self = this;
-      axios
-        .delete("http://localhost:3000/api/logout/", {
-          data: {
-            email: self.username,
-          },
-        })
-        .then(function (response) {
-          if (response.status == 204) {
-            self.$store.dispatch("resetUser");
-          }
-        })
-        .catch(function (error) {
-          // handle error
-          if (error.response.status === 401) {
-            alert(error.response.data);
-          }
-        });
+      this.$store.dispatch("resetUser");
+      sessionStorage.removeItem("authtk");
     },
   },
 };
@@ -52,7 +37,7 @@ export default {
   padding: 1rem !important;
   font-size: 2.5rem;
   left: 0;
-  background: #17252A;
+  background: #17252a;
 }
 
 #primary-nav a {

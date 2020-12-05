@@ -114,6 +114,7 @@ export default {
       const results = await axios
         .post("http://localhost:3000/ck_accountInfo", {
           user: self.username,
+          authTk: sessionStorage.getItem("authtk"),
         })
         .then(function (response) {
           if (response.status == 204) {
@@ -136,6 +137,7 @@ export default {
       const results = await axios
         .post("http://localhost:3000/sv_accountInfo", {
           user: self.username,
+          authTk: sessionStorage.getItem("authtk"),
         })
         .then(function (response) {
           if (response.status == 204) {
@@ -157,6 +159,7 @@ export default {
       const results = await axios
         .post("http://localhost:3000/ckTrans", {
           user: self.username,
+          authTk: sessionStorage.getItem("authtk"),
         })
         .then(function (response) {
           console.log(response);
@@ -269,7 +272,7 @@ export default {
   }
 }
 .account-overview {
-  width: 60%;
+  width: 50%;
   & table {
     border-collapse: collapse;
     border-radius: 5px;
@@ -315,7 +318,7 @@ export default {
   }
 }
 .utility-table {
-  width: 40%;
+  width: 50%;
   margin-left: 1rem;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
   & div {

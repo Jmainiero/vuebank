@@ -33,7 +33,7 @@ export default new Vuex.Store({
         setUser(context, username) {
             context.commit('setUser', username);
         },
-        resetUser(context){
+        resetUser(context) {
             context.commit('resetUser');
         }
     },
