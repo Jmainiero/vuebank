@@ -12,7 +12,7 @@ import footerSec from "@/components/footer.vue";
 export default {
   components: {
     headerNav,
-    footerSec
+    footerSec,
   },
   methods: {
     checkSession() {
@@ -20,8 +20,9 @@ export default {
         sessionStorage.getItem("session") == "false" &&
         this.$router.currentRoute.path != "/" &&
         this.$router.currentRoute.path != "/signup"
-      )
+      ) {
         this.$router.push("/");
+      } 
     },
   },
   mounted: function () {

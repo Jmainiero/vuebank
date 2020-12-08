@@ -20,12 +20,11 @@ const db_functions = require('./db_functions');
 
 
 app.all('*', jsonParser, (req, res, next) => {
+  console.log(req.body);
   const authTk = req.body.authTk;
   const email = req.body.user.username;
-  console.log(email);
   if (authTk == null) {
-    if (req.originalUrl === '/api/login') {
-      console.log('Line 27');
+    if (req.originalUrl === '/api/login' || req.originalUrl === '/api/logout') {
       next();
     } else {
       return res.sendStatus(401);
@@ -137,7 +136,9 @@ app.post('/api/token', (req, res) => {
 });
 
 app.delete('/api/logout/', jsonParser, (req, res) => {
-  const username = req.body.email;
+  console.log(req.body);
+  const username = req.body.user.username;
+  console.log('Logout: ' + username);
   db.query(`DELETE tokens FROM tokens WHERE tokens.email ='${username}'`, function (err) {
     if (err) throw err;
 

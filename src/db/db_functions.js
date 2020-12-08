@@ -13,7 +13,6 @@ const postSignup = async (password, req) => {
           if (err && err.code != 'ER_DUP_ENTRY') throw err;  
         }
         // console.log(result);
-        console.log(result.insertId);
         ckGenerateTrans(result.insertId);
         resolve(JSON.stringify({ 'msg': 'Account Created', 'code': 200 }));
       });
@@ -27,8 +26,6 @@ const postSignup = async (password, req) => {
 const checking = (username) => {
   try {
 
-    // console.log(req.body.formdata);
-    console.log(username);
     db.query(`SELECT * from accounts WHERE email = ?`, username, function (err, result) {
       if (err) throw err;
 
@@ -43,7 +40,7 @@ const checking = (username) => {
 const ckAccountInfo = async (username) => {
   try {
     const query = new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM ck_bal WHERE accountId = (SELECT accountId from accounts WHERE email = ?)`, username, function async(err, result) {
+      db.query(`SELECT * FROM ck_bal WHERE accountId = (SELECT accountId from accounts WHERE email = ?)`, username.username, function async(err, result) {
         if (err) throw err;
 
         if (result == '') {
@@ -61,7 +58,7 @@ const ckAccountInfo = async (username) => {
 const svAccountInfo = async (username) => {
   try {
     const query = new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM sv_bal WHERE accountId = (SELECT accountId from accounts WHERE email = ?)`, username, function async(err, result) {
+      db.query(`SELECT * FROM sv_bal WHERE accountId = (SELECT accountId from accounts WHERE email = ?)`, username.username, function async(err, result) {
         if (err) throw err;
 
         if (result == '') {
@@ -188,13 +185,11 @@ const updateBalance = async () => {
 
   await await db.query(`SELECT count(transAmnt) from sv_trans  WHERE credit ='n' AND posted ='n' AND accountId = ?`, 1, async (err, result) => {
     if (err) throw err;
-    // console.log(result[0]['count(transAmnt)']);
     if (result[0]['count(transAmnt)'] == 0) {
       await db.query(`UPDATE sv_bal SET pendingBal = 0 WHERE accountId=?`, [1, 1], (err, result) => {
         if (err) throw err;
-        console.log('Savings: Available Balance Completed.')
+        console.log('Savings: Available Balance Completed.');
       });
-      console.log('Ran 178');
     } else {
       await db.query(`UPDATE sv_bal SET pendingBal =  (SELECT (SELECT SUM(transAmnt) from sv_trans WHERE credit ='y') - (SELECT SUM(transAmnt) from sv_trans WHERE credit ='n') AS difference) WHERE accountId=?`, [1, 1], (err, result) => {
         if (err) throw err;
@@ -229,9 +224,8 @@ const transfer = async (toAcc, toAmnt, username, req) => {
 const getTransactions = async (username) => {
   try {
     const query = new Promise((resolve, reject) => {
-      db.query(`SELECT *, DATE(created_date) as 'Date' FROM ck_trans WHERE accountId = (SELECT accountId from accounts WHERE email = ?) LIMIT 10`, username, function async(err, result) {
+      db.query(`SELECT *, DATE(created_date) as 'Date' FROM ck_trans WHERE accountId = (SELECT accountId from accounts WHERE email = ?) LIMIT 10`, username.username, function async(err, result) {
         if (err) throw err;
-        // console.log(result);
         if (result == '') {
           console.log('Empty Data');
           return { 'status': 204, 'msg': 'No Data found' };
