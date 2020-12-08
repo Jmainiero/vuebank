@@ -131,7 +131,7 @@ app.post('/api/token', (req, res) => {
       const accessToken = generateAccessToken({ name: user.name });
       res.json({ accessToken: accessToken });
     });
-  });
+  }); 
 
 });
 
